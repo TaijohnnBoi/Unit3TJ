@@ -7,6 +7,7 @@ public class PlayerContoller : MonoBehaviour
     private Rigidbody playerRb;
     public float jumpForce;
     public float gravityModifier;
+    public bool IsOnGround = true;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +19,15 @@ public class PlayerContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space) && IsOnGround)
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            IsOnGround = false;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        IsOnGround = true;
+    } 
 }
